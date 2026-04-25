@@ -1,0 +1,289 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* BookBuddies Design System */
+    --background: 45 100% 94%; /* Cream #FFF8E1 */
+    --foreground: 16 26% 24%; /* Dark brown */
+
+    --card: 45 60% 98%;
+    --card-foreground: 16 26% 24%;
+
+    --popover: 45 60% 98%;
+    --popover-foreground: 16 26% 24%;
+
+    --primary: 16 26% 34%; /* Brown #6D4C41 */
+    --primary-foreground: 45 100% 98%;
+
+    --secondary: 45 40% 90%;
+    --secondary-foreground: 16 26% 34%;
+
+    --muted: 45 30% 92%;
+    --muted-foreground: 16 20% 50%;
+
+    --accent: 30 100% 48%; /* Orange #F57C00 */
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 30 30% 85%;
+    --input: 30 30% 88%;
+    --ring: 30 100% 48%;
+
+    --radius: 0.75rem;
+
+    /* Custom BookBuddies tokens */
+    --cream: 45 100% 94%;
+    --brown: 16 26% 34%;
+    --brown-dark: 16 30% 25%;
+    --orange: 30 100% 48%;
+    --orange-light: 30 100% 60%;
+    --purple-start: 260 100% 44%;
+    --purple-end: 270 77% 53%;
+    
+    /* Gradients */
+    --gradient-hero: linear-gradient(135deg, hsl(30, 100%, 48%) 0%, hsl(270, 77%, 53%) 100%);
+    --gradient-button: linear-gradient(135deg, hsl(260, 100%, 44%) 0%, hsl(270, 77%, 53%) 100%);
+    --gradient-warm: linear-gradient(135deg, hsl(30, 100%, 55%) 0%, hsl(16, 50%, 45%) 100%);
+    
+    /* Shadows */
+    --shadow-soft: 0 4px 20px -2px hsl(16 26% 34% / 0.15);
+    --shadow-card: 0 8px 30px -4px hsl(16 26% 34% / 0.12);
+    --shadow-hover: 0 12px 40px -6px hsl(16 26% 34% / 0.2);
+    --shadow-glow: 0 0 30px hsl(30 100% 48% / 0.3);
+
+    --sidebar-background: 45 60% 98%;
+    --sidebar-foreground: 16 26% 34%;
+    --sidebar-primary: 16 26% 34%;
+    --sidebar-primary-foreground: 45 100% 98%;
+    --sidebar-accent: 30 100% 48%;
+    --sidebar-accent-foreground: 0 0% 100%;
+    --sidebar-border: 30 30% 85%;
+    --sidebar-ring: 30 100% 48%;
+  }
+
+  .dark {
+    --background: 16 30% 8%;
+    --foreground: 45 60% 95%;
+
+    --card: 16 25% 12%;
+    --card-foreground: 45 60% 95%;
+
+    --popover: 16 25% 12%;
+    --popover-foreground: 45 60% 95%;
+
+    --primary: 30 100% 55%;
+    --primary-foreground: 16 30% 10%;
+
+    --secondary: 16 20% 18%;
+    --secondary-foreground: 45 60% 95%;
+
+    --muted: 16 20% 18%;
+    --muted-foreground: 45 30% 65%;
+
+    --accent: 30 100% 48%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 62% 40%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 16 20% 20%;
+    --input: 16 20% 20%;
+    --ring: 30 100% 48%;
+
+    --sidebar-background: 16 25% 10%;
+    --sidebar-foreground: 45 60% 95%;
+    --sidebar-primary: 30 100% 55%;
+    --sidebar-primary-foreground: 16 30% 10%;
+    --sidebar-accent: 16 20% 18%;
+    --sidebar-accent-foreground: 45 60% 95%;
+    --sidebar-border: 16 20% 20%;
+    --sidebar-ring: 30 100% 48%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-poppins antialiased;
+    /* No global padding-bottom — each page handles its own spacing */
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-poppins font-semibold tracking-tight;
+  }
+}
+
+@layer components {
+  .gradient-hero {
+    background: var(--gradient-hero);
+  }
+
+  .gradient-button {
+    background: var(--gradient-button);
+  }
+
+  .gradient-warm {
+    background: var(--gradient-warm);
+  }
+
+  .shadow-soft {
+    box-shadow: var(--shadow-soft);
+  }
+
+  .shadow-card {
+    box-shadow: var(--shadow-card);
+  }
+
+  .shadow-hover {
+    box-shadow: var(--shadow-hover);
+  }
+
+  .shadow-glow {
+    box-shadow: var(--shadow-glow);
+  }
+
+  .glass-card {
+    @apply bg-card/80 backdrop-blur-md border border-border/50;
+  }
+
+  .text-gradient {
+    @apply bg-clip-text text-transparent;
+    background: var(--gradient-hero);
+  }
+
+  .book-card {
+    @apply bg-card rounded-2xl shadow-card transition-all duration-300 hover:shadow-hover hover:-translate-y-1;
+  }
+
+  .chip {
+    @apply px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 cursor-pointer;
+  }
+
+  .chip-inactive {
+    @apply bg-secondary text-secondary-foreground hover:bg-primary/10;
+  }
+
+  .chip-active {
+    @apply gradient-warm text-accent-foreground;
+  }
+
+  .input-animated {
+    @apply relative overflow-hidden;
+  }
+
+  .input-animated::after {
+    content: '';
+    @apply absolute bottom-0 left-0 w-0 h-0.5 bg-accent transition-all duration-300;
+  }
+
+  .input-animated:focus-within::after {
+    @apply w-full;
+  }
+
+  .nav-link {
+    @apply relative px-4 py-2 text-foreground/70 font-medium transition-all duration-200 hover:text-foreground;
+  }
+
+  .nav-link::after {
+    content: '';
+    @apply absolute bottom-0 left-1/2 w-0 h-0.5 bg-accent transition-all duration-300 -translate-x-1/2;
+  }
+
+  .nav-link:hover::after,
+  .nav-link.active::after {
+    @apply w-full;
+  }
+
+  .nav-link.active {
+    @apply text-foreground;
+  }
+
+  /* ── Pages that sit above the mobile bottom nav need this class ──
+     Add pb-mobile to any page's root div that has the bottom nav visible.
+     Do NOT add to Landing or Login pages. */
+  .pb-mobile {
+    padding-bottom: 5rem; /* 80px — matches bottom nav height */
+  }
+}
+
+@layer utilities {
+  .animate-typing {
+    animation: typing 1.5s steps(20) infinite;
+  }
+
+  @keyframes typing {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+  }
+
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+  }
+
+  .animate-pulse-soft {
+    animation: pulse-soft 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse-soft {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.8; }
+  }
+
+  .animate-bounce-gentle {
+    animation: bounce-gentle 2s ease-in-out infinite;
+  }
+
+  @keyframes bounce-gentle {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+
+  .animate-shimmer {
+    animation: shimmer 2s linear infinite;
+    background: linear-gradient(90deg, transparent, hsl(var(--accent) / 0.2), transparent);
+    background-size: 200% 100%;
+  }
+
+  @keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+  }
+
+  .animate-success {
+    animation: success 0.6s ease-out;
+  }
+
+  @keyframes success {
+    0% { transform: scale(0); opacity: 0; }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); opacity: 1; }
+  }
+
+  .animate-progress-step {
+    animation: progress-step 0.5s ease-out forwards;
+  }
+
+  @keyframes progress-step {
+    0% { width: 0; }
+    100% { width: 100%; }
+  }
+}
+
+/* Safe area inset for iPhone notch/home bar */
+.pb-safe {
+  padding-bottom: max(0.5rem, env(safe-area-inset-bottom));
+}
