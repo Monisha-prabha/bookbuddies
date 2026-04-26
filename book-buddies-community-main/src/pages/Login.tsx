@@ -36,24 +36,22 @@ export default function Login() {
   const [resetError, setResetError] = useState("");
 
   // Detect if user came from a password reset email
-useEffect(() => {
-  // Fallback: check hash directly (handles immediate render)
-  const hashParams = new URLSearchParams(
-    window.location.hash.replace("#", "?")
-  );
-  if (hashParams.get("type") === "recovery") {
-    setShowResetPassword(true);
-  }
-
-  // Primary: listen for Supabase PASSWORD_RECOVERY event
-  const { data: { subscription } } = supabase.auth.onAuthStateChange((event) => {
-    if (event === "PASSWORD_RECOVERY") {
+  useEffect(() => {
+    const hashParams = new URLSearchParams(
+      window.location.hash.replace("#", "?")
+    );
+    if (hashParams.get("type") === "recovery") {
       setShowResetPassword(true);
     }
-  });
 
-  return () => subscription.unsubscribe();
-}, []);
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event) => {
+      if (event === "PASSWORD_RECOVERY") {
+        setShowResetPassword(true);
+      }
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
 
   // ── Login / Signup ──
   const handleSubmit = async (e: React.FormEvent) => {
@@ -156,7 +154,7 @@ useEffect(() => {
             <div className="w-12 h-12 rounded-2xl gradient-warm flex items-center justify-center shadow-soft">
               <BookOpen className="w-6 h-6 text-white" />
             </div>
-            <span className="text-2xl font-bold text-foreground">
+            <span className="text-xl font-bold text-foreground">
               Book<span className="text-accent">Buddies</span>
             </span>
           </Link>
@@ -175,7 +173,7 @@ useEffect(() => {
                 <div className="w-24 h-24 rounded-full bg-green-500 flex items-center justify-center mx-auto mb-6">
                   <Check className="w-12 h-12 text-white" />
                 </div>
-                <h2 className="text-2xl font-bold text-foreground mb-2">
+                <h2 className="text-xl font-bold text-foreground mb-2">
                   {successMessage}
                 </h2>
                 <p className="text-muted-foreground">Redirecting...</p>
@@ -190,7 +188,7 @@ useEffect(() => {
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -40 }}
               >
-                <h1 className="text-3xl font-bold text-foreground mb-2">
+                <h1 className="text-2xl font-bold text-foreground mb-2">
                   Set New Password 🔒
                 </h1>
                 <p className="text-muted-foreground mb-8">
@@ -271,7 +269,7 @@ useEffect(() => {
                     <div className="w-20 h-20 rounded-full bg-green-500 flex items-center justify-center mx-auto mb-6">
                       <Mail className="w-10 h-10 text-white" />
                     </div>
-                    <h2 className="text-2xl font-bold text-foreground mb-2">
+                    <h2 className="text-xl font-bold text-foreground mb-2">
                       Check your inbox! 📬
                     </h2>
                     <p className="text-muted-foreground mb-2">
@@ -298,7 +296,7 @@ useEffect(() => {
                   </motion.div>
                 ) : (
                   <>
-                    <h1 className="text-3xl font-bold text-foreground mb-2">
+                    <h1 className="text-2xl font-bold text-foreground mb-2">
                       Forgot Password?
                     </h1>
                     <p className="text-muted-foreground mb-8">
@@ -347,7 +345,7 @@ useEffect(() => {
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
               >
-                <h1 className="text-3xl font-bold text-foreground mb-2">
+                <h1 className="text-2xl font-bold text-foreground mb-2">
                   {isSignUp ? "Create Account" : "Welcome Back"}
                 </h1>
                 <p className="text-muted-foreground mb-8">
