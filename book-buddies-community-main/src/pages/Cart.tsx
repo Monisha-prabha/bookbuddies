@@ -63,7 +63,7 @@ export default function Cart() {
     return (
       <div className="min-h-screen bg-background">
         <Navbar />
-        <main className="container mx-auto px-4 py-8">
+        <main className="container mx-auto px-4 py-8 pb-24">
           <div className="space-y-4">
             {[1, 2, 3].map((i) => (
               <div key={i} className="bg-card rounded-2xl h-32 animate-pulse" />
@@ -78,7 +78,7 @@ export default function Cart() {
     <div className="min-h-screen bg-background">
       <Navbar />
 
-      <main className="container mx-auto px-4 py-8">
+      <main className="container mx-auto px-4 py-8 pb-24">
         <motion.div
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
