@@ -30,6 +30,7 @@ export function Navbar() {
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState("");
   const [pendingCount, setPendingCount] = useState(0);
+  const [cartCount, setCartCount] = useState(0);
 
   // Hide completely on landing/login
   if (hiddenOnPaths.includes(location.pathname)) return null;
@@ -39,7 +40,11 @@ export function Navbar() {
 
   useEffect(() => {
     fetchPendingCount();
-    const interval = setInterval(fetchPendingCount, 30000);
+    fetchCartCount();
+    const interval = setInterval(() => {
+      fetchPendingCount();
+      fetchCartCount();
+    }, 30000);
     return () => clearInterval(interval);
   }, []);
 
@@ -56,6 +61,18 @@ export function Navbar() {
     setPendingCount(count || 0);
   };
 
+  const fetchCartCount = async () => {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) return;
+
+    const { count } = await supabase
+      .from("cart")
+      .select("*", { count: "exact", head: true })
+      .eq("user_id", user.id);
+
+    setCartCount(count || 0);
+  };
+
   const handleBellClick = () => {
     navigate("/profile", { state: { tab: "friends" } });
   };
@@ -66,7 +83,6 @@ export function Navbar() {
       animate={{ y: 0, opacity: 1 }}
       className={cn(
         "sticky top-0 z-50 bg-card/95 backdrop-blur-md border-b border-border shadow-soft",
-        // On mobile, hide entirely on chat page so it takes zero space
         isMobileHidden && "hidden md:block"
       )}
     >
@@ -136,8 +152,47 @@ export function Navbar() {
             </button>
           </div>
 
-          {/* Mobile: Only show Logo + Bell (bottom nav handles navigation) */}
-          <div className="md:hidden flex items-center gap-2">
+          {/* Mobile: Logo + Communities + Cart + Bell */}
+          <div className="md:hidden flex items-center gap-1">
+
+            {/* Communities */}
+            <Link
+              to="/communities"
+              className={cn(
+                "relative p-2 rounded-xl transition-colors",
+                location.pathname === "/communities"
+                  ? "text-accent bg-accent/10"
+                  : "text-muted-foreground hover:text-accent"
+              )}
+              title="Communities"
+            >
+              <Users className="w-5 h-5" />
+            </Link>
+
+            {/* Cart */}
+            <Link
+              to="/cart"
+              className={cn(
+                "relative p-2 rounded-xl transition-colors",
+                location.pathname === "/cart"
+                  ? "text-accent bg-accent/10"
+                  : "text-muted-foreground hover:text-accent"
+              )}
+              title="Cart"
+            >
+              <ShoppingCart className="w-5 h-5" />
+              {cartCount > 0 && (
+                <motion.span
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  className="absolute -top-0.5 -right-0.5 bg-accent text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-bold"
+                >
+                  {cartCount > 9 ? "9+" : cartCount}
+                </motion.span>
+              )}
+            </Link>
+
+            {/* Bell */}
             <button
               onClick={handleBellClick}
               className="relative p-2 rounded-xl text-muted-foreground hover:text-accent transition-colors"
@@ -154,6 +209,7 @@ export function Navbar() {
                 </motion.span>
               )}
             </button>
+
           </div>
 
         </div>
